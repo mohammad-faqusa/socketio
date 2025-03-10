@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .chat-container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chat-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 75%;
+        }
+        .sent {
+            align-self: flex-end;
+            background: #007bff;
+            color: white;
+        }
+        .received {
+            align-self: flex-start;
+            background: #e5e5e5;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            background: white;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        .chat-input button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chat</div>
+        <div class="chat-box">
+            <div class="chat-message received">Hello! How can I help you?</div>
+            <div class="chat-message sent">Hi! I need some help.</div>
+            <div class="chat-message sent">Hi! I need some help.</div>
+        </div>
+        <div class="chat-input">
+            <input id="inputBox" type="text" placeholder="Type a message...">
+            <button id="sendButton">Send</button>
+        </div>
+    </div> 
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io('http://localhost:8000');
+
+    socket.on('connect', ()=> {
+        console.log(socket.id);
+
+    })
+    socket.on('messageFromServer', (dataFromServer) => {
+        console.log(dataFromServer.data); 
+    })
+    
+    const sendButton = document.querySelector('#sendButton');
+    const inputBox = document.getElementById('inputBox'); 
+    const chatBox = document.getElementsByClassName('chat-box')[0]
+
+    sendButton.addEventListener('click', (ev) => {
+        const messageBox = document.createElement('div')
+        messageBox.className = 'chat-message sent';
+        messageBox.textContent = inputBox.value; 
+
+        socket.emit('messageFromClientChat', {data: `here is a message from client chat: ${inputBox.value}`})
+        chatBox.appendChild(messageBox); 
+        inputBox.value = '' ; 
+    })
+
+    socket.on('ackMessage', (data) => {
+        const messageBox = document.createElement('div')
+        messageBox.className = 'chat-message received';
+        messageBox.textContent = data.data; 
+        chatBox.appendChild(messageBox); 
+    })
+</script>
+</html>
+
+
+
+

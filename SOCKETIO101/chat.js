@@ -4,7 +4,7 @@ const socketio = require('socket.io')
 const path = require('path')
 
 const app = express(); 
-const port = 3000; 
+const port = 8000; 
 
 app.use(express.static(path.join(__dirname, 'public'))); 
 
@@ -21,5 +21,9 @@ io.on('connection', socket => {
     socket.on('clientSide', data=> {
         console.log(data); 
     } )
-    socket.emit('serverSide', {data: 'hello from the server side'})
+    socket.emit('messageFromServer', {data: 'this is a message from a server'})
+    socket.on('messageFromClientChat', (data)=> {
+        console.log(data.data)
+        socket.emit('ackMessage', {data: 'the messgae is received!'})
+    })
 })
