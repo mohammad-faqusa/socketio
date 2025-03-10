@@ -1,0 +1,17 @@
+
+
+<script>
+    let ws = new WebSocket('ws://localhost:8000') // we want to hit the websocket then http server 
+    console.log(ws); 
+
+    ws.onopen  = (event) => {
+        console.log(event); 
+    }
+
+    ws.onmessage = (message) => {
+        console.log(message.data); 
+        ws.send("I'm so excited, I'm connected to the server.")
+
+    }
+
+</script>
