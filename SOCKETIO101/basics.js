@@ -42,4 +42,5 @@ io.on('connection', socket => {
     socket.on('clientSide', data=> {
         console.log(data); 
     } )
+    socket.emit('serverSide', {data: 'hello from the server side'})
 })
