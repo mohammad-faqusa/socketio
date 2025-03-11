@@ -25,5 +25,7 @@ io.on('connection', socket => {
     socket.on('messageFromClientChat', (data)=> {
         console.log(data.data)
         socket.emit('ackMessage', {data: 'the messgae is received!'})
+        io.emit('ackMessage', {data: `a message come from client : ${socket.id}, with this message content : ${data.data}`}) // send to all sockets 
+
     })
 })
