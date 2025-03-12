@@ -25,12 +25,12 @@ const linuxNs = new Namespace(
      '/linux'
      )
 
-wikiNs.addRoom(new Room(0, 'New Articles', 0));
+wikiNs.addRoom(new Room(0, 'New Articles', 0, true));
 wikiNs.addRoom(new Room(1, 'New Editors', 0));
 wikiNs.addRoom(new Room(2, 'Other', 0));
 
 mozNs.addRoom(new Room(0, 'FireFox', 1));
-mozNs.addRoom(new Room(1, 'SeaMonkey', 1));
+mozNs.addRoom(new Room(1, 'SeaMonkey', 1, true));
 mozNs.addRoom(new Room(2, 'SpiderMOnkey', 1));
 mozNs.addRoom(new Room(3, 'Rust', 1));
     
