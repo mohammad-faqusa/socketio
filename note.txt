@@ -1,0 +1,1 @@
+curl https://codeload.github.com/robertbunch/socketioTheDetails/tar.gz/main/starterFiles/agarClone | \ tar -xz --strip=2 socketioTheDetails-main/starterFiles/agarClone
