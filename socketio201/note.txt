@@ -1,0 +1,62 @@
+slack is workspace like discord 
+
+the socket io is like organized nested data data base system 
+    db server 
+        data bases 
+            tables 
+                rows 
+
+    Socket.io Server 
+        namespaces : for example "/" (main name space) 
+            rooms 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Send an event from the server to this socket only:
+
+socket.emit()
+socket.send()
+
+
+Send an event from a socket to a room:
+
+NOTE: remember, this will not go to the sending socket
+
+socket.to(roomName).emit()
+socket.in(roomName).emit()
+
+
+Because each socket has it's own room, named by it's socket.id, a socket can send a message to another socket:
+
+socket.to(anotherSocketId).emit('hey');
+socket.in(anotherSocketId).emit('hey');
+
+
+A namespace can send a message to any room:
+
+io.of(aNamespace).to(roomName).emit()
+io.of(aNamespace).in(roomName).emit()
+
+
+A namespace can send a message to the entire namespace
+
+io.emit()
+io.of('/').emit()
+io.of('/admin').emit()
+
+
+
+//////////////////////////////////////////////////////////////////
+socket io server and client scinario 
+
+    1. join the main NS 
+    2. Server send back the other NS data 
+    3. UI of client is updated from namespaces received 
+    4. Client join 2nd NS 
+    5. Server send back group info on 2nd NS 
+    6. UI of client is updated from group info 
+    7. Client request to join particular group 
+    8. Server send back the group history 
+    9. Update UI with the chat history 
+
+

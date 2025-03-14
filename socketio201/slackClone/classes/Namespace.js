@@ -1,16 +1,22 @@
-class Namespace{ 
+const Room = require('./Room')
+const AppError = require('./../errors/AppError')
 
-    constructor(id, name, image, endpoint) {
-        this.id = id ;
-        this.name = name ;
-        this.image = image ;
-        this.endpoint = endpoint ;
-        this.rooms = []; 
+class Namespace { 
+    constructor(id, name, ns, image) {
+        this.id = id; 
+        this.ns = ns;
+        this.name = name; 
+        this.image = image; 
+        this.rooms = []
     }
 
     addRoom(roomObject) {
-        this.rooms.push(roomObject)
+        if(roomObject instanceof Room)
+            this.rooms.push(roomObject);
+        else
+            throw new AppError('the objecte to insert in rooms is not an object') 
     }
 }
 
-module.exports = Namespace
+
+module.exports = Namespace; 

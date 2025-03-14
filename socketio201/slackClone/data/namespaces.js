@@ -1,44 +1,41 @@
-
 const Namespace = require('./../classes/Namespace')
 const Room = require('./../classes/Room')
 
-const wikiNs = new Namespace(
-      0,
-     'Wikipidia',
-     'https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png',
-     '/wiki'
-     )
+const wiki = new Namespace(
+    0,
+    'wikipedia',
+    '/wiki',
+    "https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png"
+)
+const mozilla = new Namespace(
+    1,
+    'mozilla',
+    '/mozilla',
+    'https://www.mozilla.org/media/img/logos/firefox/logo-quantum.9c5e96634f92.png'
+)
+const linux = new Namespace(
+    2,
+    'linux',
+    '/linux',
+    'https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png'
+)
+
+// constructor(roomId, roomTitle, namespaceId, privateRoom = false) {
 
 
+wiki.addRoom(new Room(0, 'New Article', 0))
+wiki.addRoom(new Room(1, 'Editors', 0))
+wiki.addRoom(new Room(2, 'Other ', 0))
 
-const mozNs = new Namespace(
-      1,
-     'Mozilla',
-     'https://pngimg.com/uploads/firefox/firefox_PNG1.png',
-     '/mozilla'
-     )
+mozilla.addRoom(new Room(0, 'FireFox', 1))
+mozilla.addRoom(new Room(1, 'SeaMonkey', 1))
+mozilla.addRoom(new Room(2, 'Rust ', 1))
 
-const linuxNs = new Namespace(
-      2,
-     'linux',
-     'https://www.pngall.com/wp-content/uploads/5/Linux-Logo-PNG-Download-Image.png',
-     '/linux'
-     )
+linux.addRoom(new Room(0, 'Debian', 2))
+linux.addRoom(new Room(1, 'REd Hat', 2))
+linux.addRoom(new Room(2, 'Ubuntu', 2))
+linux.addRoom(new Room(3, 'Mac OS', 2))
 
-wikiNs.addRoom(new Room(0, 'New Articles', 0, true));
-wikiNs.addRoom(new Room(1, 'New Editors', 0));
-wikiNs.addRoom(new Room(2, 'Other', 0));
+const namespaces = [wiki, mozilla, linux] ; 
 
-mozNs.addRoom(new Room(0, 'FireFox', 1));
-mozNs.addRoom(new Room(1, 'SeaMonkey', 1, true));
-mozNs.addRoom(new Room(2, 'SpiderMOnkey', 1));
-mozNs.addRoom(new Room(3, 'Rust', 1));
-    
-linuxNs.addRoom(new Room(0, 'Debian', 2));
-linuxNs.addRoom(new Room(1, 'Red Hat', 2));
-linuxNs.addRoom(new Room(2, 'Ubuntu', 2));
-linuxNs.addRoom(new Room(3, 'Mac OS', 2));
-    
-const namespaces = [wikiNs, mozNs, linuxNs]
-
-module.exports = namespaces; 
+module.exports = namespaces 

@@ -1,63 +1,52 @@
-const socket = io('http://localhost:9000');
-const socketLinux = io('http://localhost:9000/linux');
 
-// sockets will be put inot this array, in the index of theri ns.id 
-const nameSpacesSockets = [] ; 
-const listeners = {
-    nsChange: [],
-}
+const socket = io(); 
 
-const addListiners = (nsId)=> {
-    // nameSpacesSockets[ns.id] = thisNs
-    if(!listeners.nsChange[nsId]) {
-        nameSpacesSockets[nsId].on('nsChanged', (data)=> {
-            console.log("Namespace Changed!")
-            console.log(data)
-        })
-        listeners.nsChange[nsId] = true; 
-    } else {
-        //nothing to do the listener has been added 
-    }
-    
-}
+const nsContainer = document.querySelector('.namespaces')
 
-socket.on('connect', ()=> {
-    console.log('connected to the server')
-    socket.emit('clientConnected', `hello from client ${socket.id}`); 
-})
+const namespaces = []; 
+let lasClickedNs = ''; 
 
-const nsContainer = document.querySelector('.namespaces');
-const roomsContainer = document.querySelector('.main-rooms .room-list'); 
-// listen for nslist to give namespaces 
-socket.on('nsList', (nsData) => {
-    console.log(nsData);
+socket.on('nsList', nsData => {
+    nsData.forEach(namespace => {
+        if(!namespaces[namespace.id]) {
+            const nsDoc = `<div class="namespace" ns="${namespace.ns}"><img src="${namespace.image}"></div>`;
+            nsContainer.innerHTML += nsDoc;
+            namespaces[namespace.id] = namespace
 
-    // update the html 
-    nsContainer.innerHTML = '' ; 
-    nsData.forEach(ns => {
-        const nsElement = `<div class="namespace" ns="${ns.endpoint}"><img src="${ns.image}"></div>`
-        nsContainer.innerHTML += nsElement; 
-
-        // if the connection is new, this will be null
-        // if the connection is already established, it iwll reconnect and remain in its spot 
-        let thisNs = nameSpacesSockets[ns.id]
-
-        if(!nameSpacesSockets[ns.id]){
-            //There is no socket at this nsId. So make a new connection 
-            //jion this namespace with io() 
-            thisNs = io(`http://localhost:9000${ns.endpoint}`)
+            const thisNs = io(`http://localhost:3000${namespace.ns}`);
+            thisNs.on('nsChange', (data) => {
+                console.log(`Namespace ${data.ns} Changed!`)
+                console.log(data); 
+                namespaces[namespace.id] = data;
+                
+                if(lasClickedNs === namespace.ns) {
+                    joinNs(namespaces[namespace.id]); 
+                }
+            
+            })
         }
-        nameSpacesSockets[ns.id] = thisNs; 
-
-        addListiners(ns.id); 
         
     });
-    // document.addEventListener
-    Array.from(document.getElementsByClassName('namespace')).forEach(element => {
-        element.addEventListener('click', (ev)=> {
-            joinNs(element, roomsContainer, nsData)
-        })
+    nsData.forEach(namespace => {
+        if(!namespaces[namespace.id].clickEvent) {
+            const nsElement = Array.from(document.querySelectorAll('.namespace')).find(nsdoc => nsdoc.getAttribute('ns') === namespace.ns) ;
+            nsElement.addEventListener('click', (ev) => {
+                joinNs(namespaces[namespace.id])
+                lasClickedNs = namespace.ns; 
+            })
+            namespaces[namespace.id].clickEvent = true; 
+        }
     });
+    const lastEndpoint = localStorage.getItem('lastNs')
+    if(lastEndpoint){
+        joinNs(namespaces.find(namespace => namespace.ns === lastEndpoint))
+    }
+
 })
 
-// add event listener to each name space 
+const socket2 = io('/wiki'); 
+socket2.on('clientConnected', data => console.log(data))
+
+socket2.on('change-ns', data => {
+    namespaces.indexOf(namespaces.find(namespace => namespace.ns === data.ns)) = data; 
+})

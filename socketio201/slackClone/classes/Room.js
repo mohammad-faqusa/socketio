@@ -1,19 +1,18 @@
 class Room {
     constructor(roomId, roomTitle, namespaceId, privateRoom = false) {
-        this.roomId = roomId;
-        this.roomTitle = roomTitle;
-        this.namespaceId = namespaceId;
-        this.privateRoom = privateRoom;
-        this.history = [] ; 
+        this.roomId = roomId
+        this.roomTitle = roomTitle
+        this.namespaceId = namespaceId
+        this.history = []; 
     }
 
     addMessage(message) {
-        this.history.push(message)
+        this.history.push(message); 
     }
 
     clearHistory(){
-        this.history = [] 
+        this.history = []; 
     }
 }
 
-module.exports = Room
+module.exports = Room 
