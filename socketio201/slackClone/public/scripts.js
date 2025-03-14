@@ -15,8 +15,9 @@ document.querySelector('#message-form').addEventListener('submit', e => {
     console.log(newMessage, selectedNsId)
     sockets[selectedNsId].emit('newMessageToRoom', {
         newMessage,
-        data: Date.now(),
-        username: 'mohammad'
+        date: Date.now(),
+        username: 'mohammad',
+        selectedNsId
     })
 })
 socket.on('nsList', nsData => {
@@ -40,7 +41,8 @@ socket.on('nsList', nsData => {
             })
 
             sockets[namespace.id].on('messageToRoom', data => {
-                console.log(data); 
+                console.log(data);
+                document.querySelector('#messages').innerHTML += addMessage(data)
             })
         }
         
@@ -64,3 +66,4 @@ socket.on('nsList', nsData => {
     }
 
 })
+

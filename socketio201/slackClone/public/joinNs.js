@@ -1,5 +1,17 @@
-const joinNs = (namespace) => {
+const addMessage = (messageObj) => `
+    <li>
+        <div class="user-image">
+            <img src="https://via.placeholder.com/30" />
+        </div>
+        <div class="user-message">
+            <div class="user-name-time">${messageObj.username}<span>${new Date(messageObj.date).toLocaleDateString()} pm</span></div>
+            <div class="message-text">${messageObj.newMessage}</div>
+        </div>
+    </li>`
 
+
+const joinNs = (namespace) => {
+    
     const roomContainer = document.querySelector('.rooms .room-list');
         roomContainer.innerHTML = ``; 
         namespace.rooms.forEach(room => {
@@ -9,10 +21,13 @@ const joinNs = (namespace) => {
 
 }
 
+
 const joinRoom = async (roomTitle, namespaceId) => {
     console.log(`joined to ${roomTitle}`)
     const currentRoom = document.querySelector('.curr-room-num-users');
-    currentRoom.textContent = await sockets[namespaceId].emitWithAck('joinedRoom', roomTitle)
+    roomData = await sockets[namespaceId].emitWithAck('joinedRoom', roomTitle)
+    currentRoom.textContent = roomData.socketsCount; 
+    updateMessageHistory(roomData.roomObject)
     console.log(sockets[namespaceId].id)
 }
 
@@ -30,3 +45,11 @@ const addRoomListeners = () => {
 
 }
 
+const updateMessageHistory = (roomObject) => {
+    const messageContainer = document.querySelector('#messages');
+    messageContainer.innerHTML = '' ; 
+
+    roomObject.history.forEach(message => {
+        messageContainer.innerHTML += addMessage(message)
+    })
+}

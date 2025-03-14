@@ -52,19 +52,29 @@ namespaces.forEach(namespace => {
 
             socket.join(roomTitle)
 
+            const roomObject =  namespaces[namespace.id].rooms.find(room => room.roomTitle === roomTitle)
+
+
             const sockets = await io.of(namespace.ns).in(roomTitle).fetchSockets()
             const socketsCount = sockets.length; 
             console.log(`numbers of sockets are connected ${socketsCount}`)
             console.log(roomTitle, `in ${namespace.ns}`)
-            ackCallBack(socketsCount)
+            ackCallBack({socketsCount, roomObject})
         })
         socket.on('newMessageToRoom', (messageObj) => {
             console.log(messageObj);
             //broad cast the message to all the connected clients... this room only ! 
             const rooms = [...socket.rooms]; 
-            const currentRoom = rooms[1]; 
+            const currentRoomTitle = rooms[1]; 
             //send out this messageObj to everyone including the sender
-            io.of(namespace.ns).to(currentRoom).emit('messageToRoom', messageObj)
+            io.of(namespace.ns).to(currentRoomTitle).emit('messageToRoom', messageObj)
+
+            //add this message to this room's history 
+            const currentRoom =  namespaces[namespace.id].rooms.find(room => room.roomTitle === currentRoomTitle)
+            
+            currentRoom.addMessage(messageObj); 
+
+            
         })
 
     })
