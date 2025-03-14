@@ -25,6 +25,8 @@ const joinNs = (namespace) => {
 const joinRoom = async (roomTitle, namespaceId) => {
     console.log(`joined to ${roomTitle}`)
     const currentRoom = document.querySelector('.curr-room-num-users');
+    document.querySelector('.curr-room-text').textContent = roomTitle
+    
     roomData = await sockets[namespaceId].emitWithAck('joinedRoom', roomTitle)
     currentRoom.textContent = roomData.socketsCount; 
     updateMessageHistory(roomData.roomObject)

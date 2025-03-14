@@ -28,8 +28,20 @@ const expressServer = app.listen(port , ()=> {
 
 const io = socketio(expressServer); 
 
+io.use((socket, next) => {
+    const jwt = socket.handshake.query.jwt;
+    console.log(jwt); 
+    if(jwt) {
+        next()
+    } else {
+        console.log('good bye')
+        socket.disconnect(); 
+    }
+})
+
 io.on('connection', socket => {
     console.log(`a new client is connected ${socket.id}`)
+    console.log(socket.handshake.query)
     socket.emit('nsList', namespaces)
 })
 

@@ -1,5 +1,13 @@
+const userName = 'mohammad';
+const password = 'pass'
+const jwt = 'dsfasdfasdfasdklfasdfsafsadfs'
+const clientOptions = {
+    query: {
+        userName,password,jwt
+    }
+}
 
-const socket = io(); 
+const socket = io('http://localhost:3000', clientOptions); 
 
 const nsContainer = document.querySelector('.namespaces')
 
