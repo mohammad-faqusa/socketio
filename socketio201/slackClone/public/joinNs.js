@@ -1,21 +1,18 @@
 const joinNs = (namespace) => {
+
     const roomContainer = document.querySelector('.rooms .room-list');
         roomContainer.innerHTML = ``; 
         namespace.rooms.forEach(room => {
             roomContainer.innerHTML += `<li class="room" namespaceId=${room.namespaceId}><span class="fa-solid fa-${room.privateRoom ? 'lock' : 'globe' }"></span>${room.roomTitle}</li>`
         })
-
-        
         localStorage.setItem('lastNs', namespace.ns);
+
 }
 
-const joinRoom = (roomTitle, namespaceId) => {
+const joinRoom = async (roomTitle, namespaceId) => {
     console.log(`joined to ${roomTitle}`)
     const currentRoom = document.querySelector('.curr-room-num-users');
-    sockets[namespaceId].emit('joinedRoom', roomTitle, (ackResp) => {
-        console.log(ackResp)
-        currentRoom.textContent = ackResp
-    })
+    currentRoom.textContent = await sockets[namespaceId].emitWithAck('joinedRoom', roomTitle)
     console.log(sockets[namespaceId].id)
 }
 

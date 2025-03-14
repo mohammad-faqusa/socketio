@@ -58,5 +58,14 @@ namespaces.forEach(namespace => {
             console.log(roomTitle, `in ${namespace.ns}`)
             ackCallBack(socketsCount)
         })
+        socket.on('newMessageToRoom', (messageObj) => {
+            console.log(messageObj);
+            //broad cast the message to all the connected clients... this room only ! 
+            const rooms = [...socket.rooms]; 
+            const currentRoom = rooms[1]; 
+            //send out this messageObj to everyone including the sender
+            io.of(namespace.ns).to(currentRoom).emit('messageToRoom', messageObj)
+        })
+
     })
 })
