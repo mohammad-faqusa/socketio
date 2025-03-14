@@ -36,6 +36,27 @@ io.on('connection', socket => {
 namespaces.forEach(namespace => {
     io.of(namespace.ns).on('connection', socket => {
         console.log(`A client ${socket.id} is connected to ${namespace.ns}`);
-        io.of(namespace.ns).emit('clientConnected', {data: `you are connected to ${namespace.ns} namespace`})
+        socket.emit('clientConnected', {data: `you are connected to ${namespace.ns} namespace`})
+        socket.on('joinedRoom', async (roomTitle, ackCallBack) => {
+
+            const rooms = socket.rooms;
+            console.log(rooms); 
+
+            let i = 0 ; 
+            rooms.forEach(room => {
+                if(i!==0){
+                    socket.leave(room)
+                }
+                i++; 
+            })
+
+            socket.join(roomTitle)
+
+            const sockets = await io.of(namespace.ns).in(roomTitle).fetchSockets()
+            const socketsCount = sockets.length; 
+            console.log(`numbers of sockets are connected ${socketsCount}`)
+            console.log(roomTitle, `in ${namespace.ns}`)
+            ackCallBack(socketsCount)
+        })
     })
 })

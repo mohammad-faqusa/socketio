@@ -20,11 +20,17 @@ const linux = new Namespace(
     'https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png'
 )
 
+const android = new Namespace(
+    3,
+    'android',
+    '/android',
+    'https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png'
+)
 // constructor(roomId, roomTitle, namespaceId, privateRoom = false) {
 
 
-wiki.addRoom(new Room(0, 'New Article', 0))
-wiki.addRoom(new Room(1, 'Editors', 0))
+wiki.addRoom(new Room(0, 'New Article', 0, 1))
+wiki.addRoom(new Room(1, 'Editors', 0 , 1))
 wiki.addRoom(new Room(2, 'Other ', 0))
 
 mozilla.addRoom(new Room(0, 'FireFox', 1))
