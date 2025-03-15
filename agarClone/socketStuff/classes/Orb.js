@@ -1,11 +1,10 @@
 
-
 class Orb {
-    constructor(){
+    constructor(settings){
         this.color = this.getRandomColor(); 
-        this.locX = Math.floor(500 * Math.random() + 10); // h axis
-        this.locY = Math.floor(500 * Math.random() + 10); // v axis 
-        this.radius = 5; 
+        this.locX = Math.floor(Math.random() * settings.worldWidth); // h axis
+        this.locY = Math.floor(Math.random() * settings.worldHeight); // v axis 
+        this.radius = settings.defualtGenericOrbSize; // generic orb
     }
 
     getRandomColor(){

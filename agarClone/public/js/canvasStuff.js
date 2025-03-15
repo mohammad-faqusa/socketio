@@ -1,15 +1,12 @@
 
 
-const init = ()=> {
-    console.log(orbs); 
-    draw(); 
-}
 
 player.locX = Math.floor(500 * Math.random() + 10); // h axis
 player.locY = Math.floor(500 * Math.random() + 10); // v axis 
 
 
 const draw = ()=> {
+    console.log(players); 
     context.setTransform(1,0,0,1,0,0)
     
     // reset the context translate back to defualt 
@@ -22,16 +19,19 @@ const draw = ()=> {
     //translate moves the canvas/context to wherer the player is at 
     context.translate(camX, camY); 
 
+    players.forEach(p=>{
 
-    context.beginPath()
-    context.fillStyle ='rgb(255,0,0)' 
-    context.arc(player.locX, player.locY, 10, 0, 2*Math.PI)// draw an arc/circle 
-    context.arc(200, 200, 10, 0, 2*Math.PI)// draw an arc/circle 
-    //arg1 and arg2 are center x and cetnery of the arc 
-    context.fill();
-    context.lineWidth = 3; //how wide to draw a line in pixels 
-    context.strokeStyle = 'rgb(0,255,0)'
-    context.stroke()
+        context.beginPath()
+        context.fillStyle =p.color; 
+        context.arc(p.locX, p.locY, p.raduis, 0, 2*Math.PI)// draw an arc/circle 
+        // context.arc(200, 200, 10, 0, 2*Math.PI)// draw an arc/circle 
+        //arg1 and arg2 are center x and cetnery of the arc 
+        context.fill();
+        context.lineWidth = 3; //how wide to draw a line in pixels 
+        context.strokeStyle = 'rgb(0,255,0)'
+        context.stroke()
+    })
+
 
     orbs.forEach(orb => {
         context.beginPath();
@@ -49,11 +49,7 @@ const draw = ()=> {
 
 }
 
-
-
-setTimeout(() => {
-    init(); 
-}, 500);    
+  
 
 canvas.addEventListener('mousemove',(event)=>{
     console.log(event)
@@ -80,16 +76,7 @@ canvas.addEventListener('mousemove',(event)=>{
         console.log('first quertar ')
     }
 
-    speed = 10
-    xV = xVector;
-    yV = yVector;
-
-    if((player.locX < 5 && xV < 0) || (player.locX > 500) && (xV > 0)){
-        player.locY -= speed * yV;
-    }else if((player.locY < 5 && yV > 0) || (player.locY > 500) && (yV < 0)){
-        player.locX += speed * xV;
-    }else{
-        player.locX += speed * xV;
-        player.locY -= speed * yV;
-    }
+    
+    player.xVector = xVector; 
+    player.yVector = yVector; 
 })
