@@ -1,19 +1,20 @@
 
-class Orb {
+class Orb{
     constructor(settings){
-        this.color = this.getRandomColor(); 
-        this.locX = Math.floor(Math.random() * settings.worldWidth); // h axis
-        this.locY = Math.floor(Math.random() * settings.worldHeight); // v axis 
-        this.radius = settings.defualtGenericOrbSize; // generic orb
+        this.color = this.getRandomColor()
+        this.locX = Math.floor(Math.random() * settings.worldWidth)
+        this.locY = Math.floor(Math.random() * settings.worldHeight)
+        this.radius = settings.defaultGenericOrbSize //generic orb size
     }
 
     getRandomColor(){
-        const r = Math.floor(Math.random() * 200 + 50)
-        const g = Math.floor(Math.random() * 200 + 50)
-        const b = Math.floor(Math.random() * 200 + 50)
-
+        const r = Math.floor((Math.random() * 200) + 50)
+        const g = Math.floor((Math.random() * 200) + 50)
+        const b = Math.floor((Math.random() * 200) + 50)
+        //rbg(112,243,59)
         return `rgb(${r},${g},${b})`
     }
+
 }
 
-module.exports = Orb
+module.exports = Orb;

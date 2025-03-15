@@ -1,24 +1,25 @@
-// This is where all the data theat EVERONE needs to know aobut everyone else 
-
-
+// This is where all the data that EVERYONE needs to know about everyone else
 
 class PlayerData{
-    constructor(playerName, settings) {
+    constructor(playerName,settings){
         this.name = playerName;
-        this.locX = Math.floor(settings.worldWidth * Math.random()); // h axis
-        this.locY = Math.floor(settings.worldHeight * Math.random()); // v axis 
-        this.raduis = settings.defualtGenericOrbSize
+        this.locX = Math.floor(settings.worldWidth * Math.random() + 10); // horizontal axis
+        this.locY = Math.floor(settings.worldHeight * Math.random() + 10); // vertical axis
+        this.radius = settings.defaultSize;
         this.color = this.getRandomColor();
-        this.score = 0 ; 
-        this.orbsAbsorbed = 0 ; 
+        this.score = 0;
+        this.orbsAbsorbed = 0;
+        this.playersAbsorbed = 0;
     }
-    getRandomColor(){
-        const r = Math.floor(Math.random() * 200 + 50)
-        const g = Math.floor(Math.random() * 200 + 50)
-        const b = Math.floor(Math.random() * 200 + 50)
 
+    getRandomColor(){
+        const r = Math.floor((Math.random() * 200) + 50)
+        const g = Math.floor((Math.random() * 200) + 50)
+        const b = Math.floor((Math.random() * 200) + 50)
+        //rbg(112,243,59)
         return `rgb(${r},${g},${b})`
     }
+
 }
 
-module.exports = PlayerData
+module.exports = PlayerData;

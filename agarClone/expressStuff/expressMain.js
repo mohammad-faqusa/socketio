@@ -1,9 +1,5 @@
-const app = require('./../server').app; 
+//The purpose of expressMain is to be the entrypoint for all Express stuff
+const app = require('../server').app;
+const io = require('../server').io;
 
-app.use(express.urlencoded({ extended: true }))
-
-app.get('/', (req, res)=> {
-    res.sendFile('/index.html')
-})
-
-module.exports = app ; 
+module.exports = app;
