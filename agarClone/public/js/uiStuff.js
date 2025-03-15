@@ -22,6 +22,13 @@ document.querySelector('.name-form').addEventListener('submit', (e)=> {
     e.preventDefault();
     // console.log('submitted!')
     player.name = document.querySelector('#name-input').value
+    document.querySelector('.player-name').textContent = player.name 
     loginModal.hide();
     spawnModal.show(); 
+})
+
+document.querySelector('.start-game').addEventListener('click', (ev)=> {
+    spawnModal.hide(); 
+    const elArray = Array.from(document.querySelectorAll('.hiddenOnStart'))
+    elArray.forEach(el => el.removeAttribute('hidden'))
 })
