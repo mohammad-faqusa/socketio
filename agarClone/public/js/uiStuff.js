@@ -8,6 +8,7 @@ canvas.height = wHeight;
 canvas.width = wWidth;
 
 const player = {} //This will be all things "this" player
+let orbs = [] ; //This is global fro all non-player orbs 
 
 
 const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));

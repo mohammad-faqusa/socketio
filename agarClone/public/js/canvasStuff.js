@@ -1,23 +1,19 @@
+
+
 const init = ()=> {
+    console.log(orbs); 
     draw(); 
 }
+
 player.locX = Math.floor(500 * Math.random() + 10); // h axis
 player.locY = Math.floor(500 * Math.random() + 10); // v axis 
 
-context.beginPath()
-context.fillStyle ='rgb(255,0,0)' 
-context.arc(player.locX, player.locY, 10, 0, 2*Math.PI)// draw an arc/circle 
-//arg1 and arg2 are center x and cetnery of the arc 
-context.fill();
-context.lineWidth = 3; //how wide to draw a line in pixels 
-context.strokeStyle = 'rgb(0,255,0)'
-context.stroke()
-
 
 const draw = ()=> {
-    context.clearRect(0,0,canvas.width, canvas.height)
-    // reset the context translate back to defualt 
     context.setTransform(1,0,0,1,0,0)
+    
+    // reset the context translate back to defualt 
+    context.clearRect(0,0,canvas.width, canvas.height)
 
     //clamp the screen /vp to the players location (x,y);
     const camX = -player.locX + canvas.width/2;
@@ -36,9 +32,28 @@ const draw = ()=> {
     context.lineWidth = 3; //how wide to draw a line in pixels 
     context.strokeStyle = 'rgb(0,255,0)'
     context.stroke()
+
+    orbs.forEach(orb => {
+        context.beginPath();
+        context.fillStyle = orb.color;
+        // Adjust positions based on camera position
+        context.arc(orb.locX - player.locX + canvas.width / 2, 
+                    orb.locY - player.locY + canvas.height / 2, 
+                    orb.radius, 0, 2 * Math.PI);
+        context.fill();
+    });
+
+    
+    console.log('done drawing orbs')
     window.requestAnimationFrame(draw); 
 
 }
+
+
+
+setTimeout(() => {
+    init(); 
+}, 500);    
 
 canvas.addEventListener('mousemove',(event)=>{
     console.log(event)
@@ -77,5 +92,4 @@ canvas.addEventListener('mousemove',(event)=>{
         player.locX += speed * xV;
         player.locY -= speed * yV;
     }
-    draw(); 
 })
