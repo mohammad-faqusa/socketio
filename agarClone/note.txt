@@ -1,0 +1,13 @@
+game = heavy traffic 
+
+window size = 5000 * 5000
+
+frame : 30 fps, --> 1fr : 0.033 second 
+frame : 60 fps, --> 1fr : 0.016 second 
+
+message speed : 33 mes/sec .
+
+total messages  = (clientToServer unit + Server To Client unit) * number of clients 
+
+so we need to make it as optimal as possible 
+
