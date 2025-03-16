@@ -3,19 +3,40 @@
 // req 
 // socket.io-client 
 
-// what do we need  to know from NODE about performance 
-// - CPU load (current)
-// - Memory Usage 
-    // - total 
-    // - free 
-// - OS type
-// - uptime 
-// - CPU INFO 
-    // Type 
-    // Number of cores 
-    // Clock speed 
 const os = require('node:os');
-const { resolve } = require('node:path');
+const io = require('socket.io-client')
+const options = {
+    auth: {
+        token: '2dasfasdfasdfasdfasd'
+    }
+}
+const socket = io('http://127.0.0.1:3000',options)
+
+socket.on('connect', ()=> {
+    // console.log('we are connected to the server')
+    // we need to identify this machine to the server, for front-end useage 
+    // we could use, socket.id, random hash, ipAddress, 
+    // what about macA? 
+    const nI = os.networkInterfaces(); // list all the network interfaces on this machine 
+    let macA; 
+    //loop through all the network interfaces until we find the right oen 
+    for (let key in nI){
+        const isInternetFacing = !nI[key][0].internal; 
+        if(isInternetFacing) {
+            macA = nI[key][0].mac
+            break; 
+        }
+    }
+    const perfDataInterval = setInterval(async () => {
+        const perfData = await performanceLoadData()
+        perfData.macA = macA; 
+        socket.emit('perfData', perfData); 
+    }, 1000);
+
+    socket.on('disconnect', ()=> {
+        clearInterval(perfDataInterval); 
+    })
+})
 
 const cpuAverage = () => {
     const cpus = os.cpus(); 
@@ -38,7 +59,7 @@ const cpuAverage = () => {
 }
 
 
-const  getCpuLoad = ()=> new Promise((resolve, reject) => {
+const getCpuLoad = ()=> new Promise((resolve, reject) => {
     const cpus = os.cpus(); 
     const start = cpuAverage(cpus); 
     setTimeout(()=>{

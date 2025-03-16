@@ -18,3 +18,7 @@ node is single thread, so we need to scale the node program to run all the hardw
             adapter : broadcast and dsitripute the connections 
             have multi computers 
                     have multi cores and threads 
+
+the cluster manage the multi node copies, each node is running on its thread 
+ 
+

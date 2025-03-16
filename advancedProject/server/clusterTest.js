@@ -1,11 +1,9 @@
-const cluster = require("cluster");
-const http = require("http");
+const cluster = require("cluster"); // makes it so we can use multiple threads 
+const http = require("http"); // if we need express, we will implement it a different way 
 const { Server } = require("socket.io");
 const numCPUs = require("os").cpus().length;
 const { setupMaster, setupWorker } = require("@socket.io/sticky");
 const { createAdapter, setupPrimary } = require("@socket.io/cluster-adapter");
-
-const socketMain = require('./socketMain')
 
 if (cluster.isPrimary) {
   console.log(`Master ${process.pid} is running`);
@@ -44,12 +42,7 @@ if (cluster.isPrimary) {
   console.log(`Worker ${process.pid} started`);
 
   const httpServer = http.createServer();
-  const io = new Server(httpServer, {
-    cors: {
-      origin: 'http://localhost:3001',
-      credentials: true
-    }
-  });
+  const io = new Server(httpServer);
 
   // use the cluster adapter
   io.adapter(createAdapter());
@@ -57,6 +50,7 @@ if (cluster.isPrimary) {
   // setup connection with the primary process
   setupWorker(io);
 
-  // socketMain is our file where our emits and listens happen 
-  socketMain(io); 
+  io.on("connection", (socket) => {
+    /* ... */
+  });
 }
