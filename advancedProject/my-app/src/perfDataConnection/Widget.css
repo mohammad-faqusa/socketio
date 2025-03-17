@@ -1,0 +1,43 @@
+.widget {
+    padding: 20px;
+    text-align: center;
+}
+
+.widget h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.widget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.widget .circle {
+    border-radius: 50%;
+    padding: 20px;
+    width: 150px;
+    height: 150px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.widget .circle span {
+    font-size: 1.4rem;
+    font-weight: normal;
+}
+
+.widget .circle .circle-label {
+    font-size: 1rem;
+    color: #777;
+}

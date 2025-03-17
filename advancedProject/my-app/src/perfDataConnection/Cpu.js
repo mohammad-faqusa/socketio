@@ -12,5 +12,6 @@ const Cpu = ({ data }) => {
     );
   };
   
+  
   export default Cpu;
   

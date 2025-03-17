@@ -14,28 +14,28 @@ const CircleCanvas = ({ percentage }) => {
 
     // Background Circle
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = '#e6e6e6';
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = '#2c3e50';
     ctx.lineWidth = 10;
     ctx.stroke();
 
-    // Progress Circle
-    const endAngle = (percentage / 100) * 2 * Math.PI - 0.5 * Math.PI;
+    // Progress Arc
+    const endAngle = (Math.PI * 2 * percentage) / 100;
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, -0.5 * Math.PI, endAngle);
-    ctx.strokeStyle = '#4caf50';
+    ctx.arc(centerX, centerY, radius, -Math.PI / 2, endAngle - Math.PI / 2);
+    ctx.strokeStyle = '#00e676'; // Neon green
     ctx.lineWidth = 10;
     ctx.stroke();
 
     // Text
-    ctx.font = '24px Arial';
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#ecf0f1'; // Light text
+    ctx.font = '20px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(`${percentage}%`, centerX, centerY);
   }, [percentage]);
 
-  return <canvas ref={canvasRef} width={150} height={150}></canvas>;
+  return <canvas ref={canvasRef} width={150} height={150} className="canvas" />;
 };
 
 export default CircleCanvas;
