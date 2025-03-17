@@ -1,0 +1,12 @@
+
+import {useEffect} from 'react' 
+import socket from '../utilities/socketConnection' 
+
+const SecondTest = ()=> {
+    useEffect(()=> {
+        socket.emit('secondTest', "DATADATADATA")
+    })
+    return <h2>Second Test</h2>
+}
+
+export default SecondTest; 

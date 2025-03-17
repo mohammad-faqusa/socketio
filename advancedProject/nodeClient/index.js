@@ -75,6 +75,7 @@ const getCpuLoad = ()=> new Promise((resolve, reject) => {
 })
     
 const performanceLoadData = () => new Promise(async (resolve, reject) => {
+   
     const osType = os.type(); 
 
     const userInfo = os.userInfo()
@@ -90,6 +91,8 @@ const performanceLoadData = () => new Promise(async (resolve, reject) => {
     const memUseage = Math.floor(usedMem/totalMemory*100)/100; 
 
     const cpus = os.cpus(); 
+
+    console.log('here are the cpus', cpus)
 
     const cpuType = cpus[0].model; 
 
