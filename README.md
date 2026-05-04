@@ -12,8 +12,7 @@ This repository contains my hands-on work, experiments, and notes from the cours
 
 👉 **Socket.IO with WebSockets – The Details**
 
-🔗 Course Link:  
-https://www.udemy.com/course/socketio-with-websockets-the-details/?couponCode=MT260504G1
+🔗 [Course Certification](https://www.udemy.com/certificate/UC-5cbf0ef8-d754-40d2-8419-7fb97481db96/)
 
 ---
 
